@@ -7,26 +7,26 @@ on:
 jobs:
 
   quality-check:
-    name: Quality Check (CI)
+    name: quality check (CI)
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: checkout code
         uses: actions/checkout@v4
 
-      - name: Install HTMLHint
+      - name: install HTMLHint
         run: npm install -g htmlhint
 
-      - name: Run HTMLHint
+      - name: run HTMLHint
         run: htmlhint "**/*.html"
 
-      - name: Link Checker
+      - name: link checker
         uses: lycheeverse/lychee-action@v1
         with:
           args: ". --verbose"
 
   docker-build:
-    name: Build & Push Docker
+    name: build & push docker
     needs: quality-check
     runs-on: ubuntu-latest
 
@@ -35,20 +35,44 @@ jobs:
       contents: read
 
     steps:
-      - name: Checkout code
+      - name: checkout code
         uses: actions/checkout@v4
 
-      - name: Log in to GHCR
+      - name: log in to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Docker image
+      - name: build docker image
         run: |
           docker build -t ghcr.io/${{ github.repository }}:latest .
 
-      - name: Push Docker image
+      - name: push docker image
         run: |
           docker push ghcr.io/${{ github.repository }}:latest
+  deploy:
+    name: deploy GitHub pages
+    needs: docker-build
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup pages
+        uses: actions/configure-pages@v4
+
+      - name: upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: deploy to GitHub pages
+        uses: actions/deploy-pages@v4
