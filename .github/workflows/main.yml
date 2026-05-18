@@ -52,6 +52,7 @@ jobs:
       - name: push docker image
         run: |
           docker push ghcr.io/${{ github.repository }}:latest
+
   deploy:
     name: deploy GitHub pages
     needs: docker-build
@@ -61,6 +62,9 @@ jobs:
       contents: read
       pages: write
       id-token: write
+
+    environment:
+      name: github-pages
 
     steps:
       - name: checkout
@@ -75,4 +79,5 @@ jobs:
           path: .
 
       - name: deploy to GitHub pages
+        id: deployment
         uses: actions/deploy-pages@v4
