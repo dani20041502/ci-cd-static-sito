@@ -24,12 +24,3 @@ jobs:
         uses: lycheeverse/lychee-action@v1
         with:
           args: ". --verbose"
-
-  docker-build:
-    name: Build & Push Docker
-    needs: quality-check
-    runs-on: ubuntu-latest
-
-    permissions:
-      packages: write
-      contents: read
