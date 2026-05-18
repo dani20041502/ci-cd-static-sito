@@ -9,8 +9,8 @@
 <body>
 
   <div class="container">
-    <h1>⚡ Reaction Game</h1>
-    <p id="message">Aspetta il verde...</p>
+    <h1> Reaction Game</h1>
+    <p id="message">aspetta il verde...</p>
 
     <div id="box" class="box red"></div>
 
@@ -29,7 +29,7 @@
 
       result.innerText = "";
       box.className = "box red";
-      message.innerText = "Aspetta il verde...";
+      message.innerText = "aspetta il verde...";
 
       const delay = Math.random() * 3000 + 1000;
 
@@ -46,10 +46,10 @@
       if (box.classList.contains("green")) {
         const reactionTime = Date.now() - startTime;
         document.getElementById("result").innerText =
-          "⚡ Tempo: " + reactionTime + " ms";
+          " tempo: " + reactionTime + " ms";
       } else {
         document.getElementById("result").innerText =
-          "❌ Troppo presto!";
+          "❌ troppo presto!";
         clearTimeout(timeout);
       }
     };
