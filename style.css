@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: white;
+  text-align: center;
+}
+
+.container {
+  margin-top: 60px;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+.box {
+  width: 200px;
+  height: 200px;
+  margin: 40px auto;
+  border-radius: 20px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.red {
+  background: red;
+}
+
+.green {
+  background: limegreen;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: dodgerblue;
+  color: white;
+}
+
+button:hover {
+  background: #1e90ff;
+}

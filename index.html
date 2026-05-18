@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reaction Game</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="container">
+    <h1>⚡ Reaction Game</h1>
+    <p id="message">Aspetta il verde...</p>
+
+    <div id="box" class="box red"></div>
+
+    <button onclick="startGame()">START</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    let startTime;
+    let timeout;
+
+    function startGame() {
+      const box = document.getElementById("box");
+      const message = document.getElementById("message");
+      const result = document.getElementById("result");
+
+      result.innerText = "";
+      box.className = "box red";
+      message.innerText = "Aspetta il verde...";
+
+      const delay = Math.random() * 3000 + 1000;
+
+      timeout = setTimeout(() => {
+        box.className = "box green";
+        message.innerText = "ORA! CLICCA!";
+        startTime = Date.now();
+      }, delay);
+    }
+
+    document.getElementById("box").onclick = function () {
+      const box = this;
+
+      if (box.classList.contains("green")) {
+        const reactionTime = Date.now() - startTime;
+        document.getElementById("result").innerText =
+          "⚡ Tempo: " + reactionTime + " ms";
+      } else {
+        document.getElementById("result").innerText =
+          "❌ Troppo presto!";
+        clearTimeout(timeout);
+      }
+    };
+  </script>
+
+</body>
+</html>
